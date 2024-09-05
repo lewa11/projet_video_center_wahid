@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MIDWA | Accueil{% endblock %}
+
+{% block body %}
+<div>
+<div class="flex flex-row items-center justify-center">
+<!-- Messages d'erreur -->
+{% for message in app.flashes('error') %}
+    <div role="alert" class="alert alert-danger flex items-center p-4 mb-4 mt-6 text-sm text-amber-600 rounded-lg bg-blue-600  w-full max-w-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current mr-2" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>{{ message }}</span>
+    </div>
+{% endfor %}
+<!-- Messages d'information -->
+{% for message in app.flashes('info') %}
+    <div role="alert" class="alert alert-info flex items-center p-4 mb-4 mt-6 text-sm text-blue-800 rounded-lg bg-blue-800 dark:bg- dark:text-blue-400 w-full max-w-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current mr-2" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>{{ message }}</span>
+    </div>
+{% endfor %}
+</div>
+{% if app.request.get('_route') not in ['app_login', 'app_register'] %}
+            <div class="flex justify-center items-center content-center">
+                {% include 'partials/modaltheme.html.twig' %}                  
+            </div>              
+        {% endif %} 
+<div class="flex w-screen -mt-24">
+    {% include 'partials/hero.html.twig' %}   
+</div>
+<main class="flex-grow flex flex-col items-center justify-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20 mt-4">
+        {% for video in videos %}
+            {% if video.premiumVideo and not app.user %}
+                <div class="card shadow-xl border " style="width: 300px;">
+                    <div class="card-body p-4 flex flex-col justify-between text-amber-600 font-mono font-bold ">
+                        <h2 class="card-title text-lg text-red-600">Vidéo Premium</h2>
+                        <p class="text-sm text-gray-400">Connectez-vous pour voir cette vidéo.</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card bg-transparent shadow-xl border border-amber-600 shadow-amber-600 " style="width: 300px;" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+                    <figure>
+                        <iframe 
+                            src="{{ video.videoLink }}" 
+                            width="300" 
+                            height="200" 
+                            frameborder="0" 
+                            allowfullscreen 
+                            class="rounded-t-lg">
+                        </iframe>
+                    </figure>
+                    <!-- Ligne de séparation collée à la vidéo -->
+                    <hr class="border-t border-amber-600">
+                    <div class="card-body p-4 flex flex-col justify-between text-amber-600 font-mono font-bold ">
+                        <div>
+                            <h2 class="card-title text-lg">
+                                <a href="{{ path('app_video_show', {'id': video.id}) }}" class="text-amber-600 hover:underline">
+                                    {{ video.title | length > 20 ? video.title|slice(0, 20) ~ '...' : video.title }}
+                                    {% if video.premiumVideo %}
+                                        ⭐
+                                    {% endif %}
+                                </a>
+                            </h2>
+                            <p class="text-sm text-amber-600">
+                                {{ video.description | length > 25 ? video.description|slice(0, 25) ~ '...' : video.description }}
+                            </p>
+                            <p class="text-xs text-amber-600 font-mono font-bold">
+                                Par {{ video.user.firstname }} {{ video.user.lastname }}
+                            </p>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-xs text-amber-600 font-mono font-bold">Ajoutée le {{ video.createdAt ? video.createdAt|date('d-m-Y H:i') : '' }}</p>
+                        </div>            
+                    </div>                       
+                </div>
+            {% endif %}
+        {% else %}
+            <p class="col-span-full text-center text-amber-600">Vous n'avez pas de vidéo.</p>
+        {% endfor %}
+    </div>
+<br><br>
+    <div class="">
+        {{ knp_pagination_render(videos) }}
+    </div>
+</main>
+
+</div>
+{% endblock %}

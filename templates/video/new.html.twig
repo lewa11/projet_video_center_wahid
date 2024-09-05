@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}MIDWA | Création Video{% endblock %}
+
+
+
+{% block body %}
+<div class="relative bg-cover bg-center bg-no-repeat h-screen flex justify-center items-center text-amber-600 ">
+    <div class="flex flex-col items-center justify-center">
+        <div class="">
+            <h1 class="mb-5 text-amber-600 mt-10 font-sans tracking-widest">Créer votre video 🎥</h1>
+        </div>
+        {{ include('video/_form.html.twig') }}
+            {# <a href="{{ path('app_home') }}">back to list</a> #}
+    </div>
+    
+   
+
+</div>
+
+{% endblock %}

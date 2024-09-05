@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MIDWA | Vidéos de Code{% endblock %}
+
+{% block body %}
+<div class="lighting"></div>
+  
+<div class="container">
+    <div class="lighting-floor"></div>
+    
+    <div class="floor">
+      <div><div></div></div>
+      <div></div>
+      <div><div></div></div>
+      <div></div>
+      <div><div></div></div>
+      <div></div>
+    </div>
+
+    <div class="media-center"><div></div><div></div><div></div><div></div></div>
+    
+    <div class="ps5">
+      <div class="base"></div>
+      <div class="bottom-2"></div>
+      <div class="bottom"></div>
+      <div class="middle"></div>
+      <div class="glow"></div>
+      <div class="top"></div>
+    </div>
+
+    <div class="dvr">
+      <input type="range" id="opacity" name="volume" value="1" min="0" max="1" step="0.01"/>
+      <div class="front">
+        <div class="display"></div>
+      </div>
+    </div>
+
+    <div class="lightbars">
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+
+    <div class="sound-system">
+      <div class="sys-l">
+        <div></div>
+        <div></div>
+        <div></div>
+        <span></span>
+      </div>
+      <div class="sys-r">
+        <div></div>
+        <div></div>
+        <div></div>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="media-container">
+      <video src=""></video>
+    </div>
+</div>
+
+<script>
+const mediaUrls = [
+    'https://assets.codepen.io/12823948/y2mate.com+-+Captain+Kid+Wipes+Out+One+of+Shanks+Fleets++One+Piece_v240P.mp4',
+    'https://assets.codepen.io/12823948/y2mate.com+-+Batman++Le+g%C3%A9n%C3%A9rique_480p.mp4',
+    'https://assets.codepen.io/12823948/sentinel.mp4',
+    'https://assets.codepen.io/12823948/y2mate.com+-+DRAGON+BALL+Sparking+ZERO++50+DAYS+FROM+NOW++ONL+Trailer_v240P.mp4',
+    '',
+];
+
+let currentIndex = 0;
+let preloadedVideos = {};
+
+function preloadVideo(url) {
+    if (!preloadedVideos[url]) {
+        const video = document.createElement('video');
+        video.src = url;
+        video.type = 'video/mp4';
+        video.preload = 'auto';
+        video.style.display = 'none';
+        document.body.appendChild(video);
+        preloadedVideos[url] = true;
+    }
+}
+
+function swapMedia() {
+    const mediaContainer = document.getElementById('media-container');
+
+    // Supprimer toutes les vidéos avant de changer
+    removeAllVideos();
+    mediaContainer.innerHTML = '';
+
+    const url = mediaUrls[currentIndex];
+    const nextUrl = mediaUrls[(currentIndex + 1) % mediaUrls.length];
+    const isImg = /\.(jpg|jpeg|png|gif)$/i.test(url);
+
+    for (let i = 0; i < 4; i++) {
+        if (isImg) {
+            const img = document.createElement('img');
+            img.src = url;
+            mediaContainer.appendChild(img);
+        } else {
+            const video = document.createElement('video');
+            const source = document.createElement('source');
+            source.src = url;
+            source.type = 'video/mp4';
+            
+            video.autoplay = true;
+            video.loop = true;
+            video.muted = (i === 0) ? false : true; // Démuter seulement la première vidéo
+
+            video.controls = true; // Ajoutez des contrôles pour permettre à l'utilisateur d'interagir
+            (i > 0) ? video.style.opacity = currentOpacity : '';
+            video.appendChild(source);
+            mediaContainer.appendChild(video);
+            preloadVideo(nextUrl);
+        }
+    }
+
+    currentIndex = (currentIndex + 1) % mediaUrls.length;
+}
+
+// Fonction pour supprimer toutes les vidéos du DOM
+function removeAllVideos() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        video.pause();
+        video.currentTime = 0; // Réinitialiser la vidéo à son début
+        video.muted = true; // S'assurer que le son est désactivé
+        video.remove(); // Supprimer la vidéo du DOM
+    });
+}
+
+// Fonction pour réinitialiser les vidéos lorsque l'utilisateur revient sur la page
+function resetVideosOnReturn() {
+    const mediaContainer = document.getElementById('media-container');
+    const url = mediaUrls[currentIndex];
+
+    mediaContainer.innerHTML = ''; // Effacer le conteneur
+
+    if (url) {
+        const video = document.createElement('video');
+        video.src = url;
+        video.type = 'video/mp4';
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = false; // Démuter la vidéo au retour
+        video.controls = true;
+        mediaContainer.appendChild(video);
+    }
+}
+
+// Écouteur d'événement pour les liens pour supprimer les vidéos
+document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => {
+        removeAllVideos();  // Supprimer toutes les vidéos avant la navigation
+    });
+});
+
+// Écouteur d'événement pour réinitialiser les vidéos lorsque la page est de nouveau visible
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        resetVideosOnReturn();
+    }
+});
+
+let ps5 = document.querySelector(".ps5");
+document.querySelector("#media-container").addEventListener('click', (e) => {
+    e.preventDefault();
+    if (ps5.classList.contains("on")) {
+        ps5.classList.remove('on');
+        currentIndex = 0;
+    }
+    (currentIndex == 3) ? currentIndex++ : '';
+    swapMedia();
+});
+
+ps5.addEventListener('click', () => {
+    if (ps5.classList.contains("on")) {
+        ps5.classList.remove('on');
+        currentIndex = 4;
+        swapMedia();
+    } else {
+        ps5.classList.add('on');
+        currentIndex = 3;
+        swapMedia();
+    }
+});
+
+let currentOpacity = 1;
+document.querySelector("input#opacity").addEventListener("input", (e) => {
+    currentOpacity = e.target.value;
+    let bgTarget = document.querySelectorAll("video");
+    for (let i = 1; i < bgTarget.length; i++) {
+        bgTarget[i].style.opacity = currentOpacity;
+    }
+});
+
+const d = new Date();
+const hr = d.getHours() % 12 || 12;
+const min = d.getMinutes().toString().padStart(2, '0');
+document.querySelector(".display").innerHTML = `${hr}:${min}`;
+</script>
+{% endblock %}

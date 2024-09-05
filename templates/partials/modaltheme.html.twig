@@ -1,0 +1,67 @@
+<!-- Bouton pour ouvrir le modal -->
+       
+        <button class="btn bg-amber-600 flex justify-center items-center w-max p-4 font-mono font-extrabold tracking-widest text-black -mt-3.5 z-40 content-center mb-10 hover:bg-gradient-to-r from-yellow-500 to-pink-600 hover:text-black" onclick="openModal()">Choisis le thème de ton choix !</button>
+
+
+        <!-- Modal -->
+        <dialog id="my_modal_2" class="modal">
+            <div class="modal-box">
+                
+                <p class="py-4">Sélectionnez un thème :</p>
+                
+                <!-- Cases à cocher pour choisir les thèmes -->
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Grey</span>
+                        <input type="checkbox" name="theme-checkbox" value="grey" class="checkbox checked:bg-gray-500" />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">night</span>
+                        <input type="checkbox" name="theme-checkbox" value="night" class="checkbox checked:bg-white" />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Luxury</span>
+                        <input type="checkbox" name="theme-checkbox" value="luxury" class="checkbox checked:bg-red-600" />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">synthwave</span>
+                        <input type="checkbox" name="theme-checkbox" value="synthwave" class="checkbox checked:bg-yellow-500" />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">forest</span>
+                        <input type="checkbox" name="theme-checkbox" value="forest" class="checkbox checked:bg-pink-500" />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">cyberpunk</span>
+                        <input type="checkbox" name="theme-checkbox" value="cyberpunk" class="checkbox checked:bg-pink-500" />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Aqua</span>
+                        <input type="checkbox" name="theme-checkbox" value="aqua" class="checkbox checked:bg-blue-300" />
+                    </label>
+                </div>
+                <div class="form-control">
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Coffee</span>
+                        <input type="checkbox" name="theme-checkbox" value="coffee" class="checkbox checked:bg-brown-500" />
+                    </label>
+                </div>
+                
+            </div>
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
+   

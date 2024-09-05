@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MIDWA | Mon Profil{% endblock %}
+
+{% block body %}
+
+<section class="relative bg-cover bg-center bg-no-repeat flex flex-col justify-between min-h-screen">
+    <div class="absolute inset-0"></div>
+    <div class="relative flex flex-col mx-auto w-screen justify-center items-center content-center self-start">
+        <!-- Messages Flash -->
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label }} mb-4 w-full md:max-w-md text-center text-white">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        
+        <!-- Profil -->
+        <div class="w-auto rounded-lg border border-amber-600 sm:max-w-md xl:p-0 bg-transparent h-auto z-40 flex relative justify-center items-center content-center shadow-yellow-600 shadow-lg">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 mt-5 flex flex-col m-8 ">
+
+                <!-- Avatar -->
+                <div class="avatar mb-6 flex justify-center ">
+                    <div class="w-24 h-24 rounded-full transform transition duration-300 hover:scale-150">
+                        {% if app.user.avatar %}
+                            <img src="{{ asset('images/users/' ~ app.user.avatar) }}" class="rounded-full animated-avatar " alt="Avatar de {{ app.user.firstname }}">
+                        {% else %}
+                            <img src="{{ asset('images/image-default.webp') }}" class="rounded-full" alt="Avatar par défaut">
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Détails du Profil -->
+
+                <h1 class="text-3xl font-bold text-center flex relative justify-center text-amber-600">Profil</h1>
+                <p class="text-sm mb-2 text-amber-600 text-center">{{ app.user.email }}</p>
+                <h2 class="text-xl font-semibold mb-1 text-amber-600 text-center">{{ app.user.firstname ~" "~ app.user.lastname }}</h2>
+                <p class="text-xs text-amber-600 mb-4 text-center">{{'accountShow.Accountcreatedon'|trans}} {{ app.user.createdAt|date("d/m/Y") }}</p>
+                <!-- Bouton Editer -->
+                <a class="font-mono font-bold bg-amber-600 w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-md text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 border border-zinc-600 mb-5" href="{{ path('app_account_edit') }}">{{'accountShow.EditAccount'|trans}}</a>
+            </div>
+        </div>
+
+
+        
+        <!-- Affichage des vidéos de l'utilisateur -->
+        <div class="mt-8 w-full md:max-w-5xl flex flex-col justify-center items-center" >
+            <h2 class="text-2xl font-bold text-center text-amber-600 mt-5 mb-10 items-center flex flex-col">Mes Vidéos 📺</h2>
+            {% if videos|length > 0 %}
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20 mt-4" >
+                    {% for video in videos %}
+                        <div class="card  border border-black shadow-amber-600 shadow-2xl bg-transparent" style="width: 300px;" data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+                            <figure>
+                                <iframe 
+                                    src="{{ video.videoLink }}" 
+                                    width="300" 
+                                    height="200" 
+                                    frameborder="0" 
+                                    allowfullscreen 
+                                    class="rounded-t-lg">
+                                </iframe>
+                            </figure>
+                                        <!-- Ligne de séparation collée à la vidéo -->
+                                <hr class="border-t border-black">
+                            <div class="card-body p-4 flex flex-col justify-between text-amber-600 font-mono font-bold ">
+                                <div>
+                                    <h2 class="card-title text-lg">
+                                        <a href="{{ path('app_video_show', {'id': video.id}) }}" class="text-amber-600 hover:underline">
+                                            {{ video.title | length > 20 ? video.title|slice(0, 20) ~ '...' : video.title }}
+                                        </a>
+                                    </h2>
+                                    <p class="text-sm text-amber-600">
+                                        {{ video.description | length > 25 ? video.description|slice(0, 25) ~ '...' : video.description }}
+                                    </p>
+                                    <p class="text-xs text-amber-600 font-mono font-bold">
+                                        Par {{ video.user.firstname }} {{ video.user.lastname }}
+                                    </p>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-xs text-amber-600 font-mono font-bold">Ajoutée {{ video.createdAt ? video.createdAt|date('d-m-Y H:i') : '' }}</p>
+                                </div>            
+                            </div>                       
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center text-amber-600">😢 Vous n'avez aucune vidéo 😢</p>
+            {% endif %}
+        </div>
+        <!-- Lien de retour à l'accueil -->
+        <div class="mt-10">
+            <a href="{{ path('app_home') }}" class="text-sm text-amber-600 hover:underline">
+                ← Retour à l'accueil
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

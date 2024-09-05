@@ -1,0 +1,26 @@
+Title: Titre
+'Video link': 'Video lien'
+Description: Description
+'Created at': 'Créé le'
+'Updated at': 'Modifié le'
+'Titre de la Vidéo': 'Titre de la Vidéo'
+'Lien de la Vidéo': 'Lien de la Vidéo'
+'Your email address is not verified.': "Votre adresse e-mail n'est pas vérifiée."
+Firstname: Prénom
+Lastname: 'Nom de famille'
+Email: Email
+Password: 'Mot de passe'
+'Agree terms': 'Accepter les termes'
+accountShow:
+  profile: "Mon Profil"
+  Accountcreatedon: "Créé le"
+  EditAccount: "Modifier le compte"
+userForm.firstname: "Prénom"
+userForm.lastname: "Nom"
+Apply changes: "Appliquer les modifications"
+userForm.email: "Adresse e-mail"
+Account successfully updated: "Votre compte a été mis à jour avec succès."
+userForm:
+    avatar: "Choisir une photo de profil"
+
+

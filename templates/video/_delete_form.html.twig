@@ -1,0 +1,29 @@
+<!-- Formulaire de suppression -->
+<form id="delete-form-custom" method="post" action="{{ path('app_video_delete', {'id': video.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ video.id) }}">
+    <button type="button" onclick="openCustomModal()" class="btn btn-error flex w-80 text-white bg-red-600">Supprimer</button>
+</form>
+<!-- Modale du boutton delete customizé (conflit entre flex et hidden mais pas de soucis-->
+<div id="confirmation-modal-custom" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 hidden">
+    <div class="bg-gray-800 rounded-lg p-6 w-96">
+        <h2 class="text-xl font-semibold text-red-600">⚠️ Confirmation de suppression</h2>
+        <p class="mt-4 text-red-600">Êtes-vous certain de vouloir supprimer cette vidéo?</p>
+        <div class="mt-6 flex justify-center items-center space-x-4">
+            <button onclick="closeCustomModal()" class="px-4 py-2 bg-blue-600 text-white rounded">Annuler</button>
+            <button onclick="confirmDeletion()" class="px-4 py-2 bg-red-600 text-white rounded">Confirmer</button>
+        </div>
+    </div>
+</div>
+<script>
+    function openCustomModal() {
+        document.getElementById('confirmation-modal-custom').classList.remove('hidden');
+    }
+
+    function closeCustomModal() {
+        document.getElementById('confirmation-modal-custom').classList.add('hidden');
+    }
+
+    function confirmDeletion() {
+        document.getElementById('delete-form-custom').submit();
+    }
+</script>

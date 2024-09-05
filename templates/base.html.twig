@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<html data-theme="night"> 
+{# <html>     #}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {# <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> #}
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link href="https://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet">
+        {# <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"> #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+        {% endblock %}
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}           
+        {% endblock %}
+    </head>
+    <body class="flex flex-col min-h-screen font-mono font-bold">
+
+        {% for message in app.flashes('success') %}
+         {% if message matches '/Bienvenue/' %}
+        <div class="alert flex items-center justify-center h-16 text-white text-center bg-gradient-to-r from-blue-600 via-blue-700 to-blue-900">
+            {{ message }}
+        </div>
+            {% else %}
+                <div class="alert alert-success flex items-center justify-center text-center text-white bg-gradient-to-r from-green-500 via-green-500 to-green-700">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+        {% for message in app.flashes('error') %}
+            <div class="bg-red-600 text-white p-4 rounded flex items-center justify-center text-center">{{ message }}</div>
+        {% endfor %}
+        {% for message in app.flashes('info') %}
+            <div class="bg-yellow-600 text-white p-4 rounded flex items-center justify-center text-center">{{ message }}</div>
+        {% endfor %}
+        <div>  
+            {% if app.request.get('_route') not in ['app_login', 'app_register'] %}  
+                {% include 'partials/header.html.twig' %}        
+            {% endif %}
+        </div>
+        {# ------ cursor -------- #}        
+         {# <pointer-particles></pointer-particles> #}
+        {# ------ cursor -------- #}
+        <!-- Adjusted the main block here -->
+        
+        <main class="flex-grow flex content-center justify-center items-start">
+            {% block body %}{% endblock %}           
+        </main>
+        {% if app.request.get('_route') not in ['app_login', 'app_register'] %}
+            {% include 'partials/footer.html.twig' %}
+        {% endif %}
+        <script src="{{ asset('js/modal.js') }}"></script>
+        <script src="{{ asset('js/navbar.js') }}"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>AOS.init();</script>
+        
+            
+        
+        {# <script src="{{ asset('js/cursor.js') }}"></script> #}
+        {# <script src="{{ asset('js/gallery.js') }}"></script> #}
+        {# <script src="{{ asset('js/resetbtn.js') }}"></script> #}
+        {# <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> #}
+        <script src="//code.tidio.co/3oi2pzb9ikmv2ozpnhsbndzcaojs4cns.js" async></script> 
+        
+    </body>
+</html>

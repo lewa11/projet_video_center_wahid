@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion !{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
+        /* Applique la police uniquement aux éléments que vous souhaitez */
+        .registration-page {
+            font-family: 'Segoe UI', sans-serif;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="relative bg-cover bg-center bg-no-repeat flex flex-col justify-start min-h-screen"  style="background-image: url('{{ asset('images/bg6.png')}}');  ">
+    <div class="absolute inset-0"></div>
+    <div class="relative flex flex-col mx-auto w-screen justify-center items-center content-center self-start registration-page ">
+        <div class="w-auto rounded-lg shadow dark:border sm:max-w-md xl:p-0 bg-black bg-opacity-70 dark:border-gray-700 h-auto z-40 flex relative justify-center items-center content-center mt-14 " >
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 mt-5 flex flex-col m-8 mx-24">
+
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-danger text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 border-red-400 px-4 py-3 rounded relative mt-4 text-center" role="alert">
+                        <strong class="font-bold">Erreur!</strong>
+                        <span>{{ message }}</span>
+                    </div>
+                {% endfor %}
+
+                {% if error %}
+                    <div class="alert alert-danger text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="mb-3 text-center">
+                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}" class="text-blue-600 hover:underline">Logout</a>
+                    </div>
+                {% endif %}
+
+                <div class="-ml-4">
+                    <h1 class="text-3xl font-bold text-center text-gray-900 dark:text-white flex relative -left-16 ">S'identifier</h1>
+                </div>
+
+                <form method="post" class="space-y-4 md:space-y-6 text-gray-400 -m-20">
+                    <div>
+                        <label for="username" class="block mb-2 text-sm text-gray-400  tracking-widest"></label>
+                        <div class="relative mb-4 text-white">
+                            <input type="email" value="{{ last_username }}" name="_username" id="username" class="bg-black bg-opacity-50 border border-gray-600  rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent" autocomplete="email" required autofocus>
+                            <label for="username" class="absolute text-sm text-gray-400 transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">E-mail</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="relative mb-4">
+                            <label for="password" class="absolute text-xs  transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">Mot de passe</label>
+                            <input type="password" name="_password" id="password" class="bg-black bg-opacity-50 border border-gray-600  rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent" autocomplete="current-password" required>
+                        </div>
+
+                        <!-- Remember me checkbox -->
+                        <div class="items-center flex flex-row mb-5">
+                            <input type="checkbox" name="_remember_me" id="remember_me" class="text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                            <label for="remember_me" class="ml-2 block text-sm text-white dark:text-gray-300">Se souvenir de moi</label>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <button class="font-mono font-bold bg-blue-700 w-full text-white bg-primary-600 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-md text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 border border-zinc-600 mb-5" type="submit">
+                            S'identifier
+                        </button>
+                    </div>
+
+                    <div class="flex flex-col items-center content-center text-center">
+                        <a href="{{ path('app_forgot_password_request') }}" class=" hover:underline text-left hover:text-red-600 text-white">Mot de passe oublié ?</a>
+                        <a href="{{ path('app_register') }}" class="text-center items-center mt-6 text-white">Premiere visite sur MIDWAM ? <br> <span class="text-blue-600 hover:underline">Inscrivez vous</span></a>
+                    </div>
+                    <div class="mt-12">
+                         <a href="{{ path('app_home') }}" class="flex justify-center -mb-8 hover:underline text-white">
+                       Retour à l'acceuil
+                    </a>
+                </div>
+                </form>
+
+                
+            </div>
+        </div>
+    </div>
+
+   
+</section>
+{% endblock %}

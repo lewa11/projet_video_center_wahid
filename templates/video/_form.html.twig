@@ -1,0 +1,55 @@
+<section class="bg-transparent">
+  <div class="flex flex-col px-6 mx-auto md:h-screen w-auto content-center justify-start items-center h-auto">
+      
+      <div class="w-full rounded-lg shadow-2xl dark:border md:mt-0 sm:max-w-md xl:p-0  dark:border-gray-800 font-mono font-extrabold">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8 rounded-lg border border-amber-600  shadow-yellow-600 shadow-lg">
+            
+              {{ form_start(form, {'attr': {'class': 'space-y-4 md:space-y-6 '}}) }}
+                  <div>
+                      <div class="relative mb-4">
+                          {{ form_widget(form.title, {'attr': {'class': 'bg-transparent border border-amber-600 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent'}}) }}
+                          <label for="title" class="absolute text-sm  transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">Titre de la vidéo</label>
+                      </div>
+                    {% for error in form.title.vars.errors %}
+                        <p class="text-red-600">{{ error.message }}</p>
+                    {% endfor %} 
+                  </div>
+                  <div>
+                      <div class="relative mb-4">
+                          {{ form_widget(form.videoLink, {'attr': {'class': 'bg-transparent border border-amber-600 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent'}}) }}
+                          <label for="videoLink" class="absolute text-sm  transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">Lien de la vidéo</label>
+                      </div>
+                      {% for error in form.videoLink.vars.errors %}
+                        <p class="text-red-600">{{ error.message }}</p>
+                    {% endfor %} 
+                  </div>
+                  <div>
+                      <div class="relative mb-4">
+                          {{ form_widget(form.description, {'attr': {'class': 'bg-transparent border border-amber-600 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent'}}) }}
+                          <label for="description" class="absolute text-sm  transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">Description</label>
+                      </div>
+                      {% for error in form.description.vars.errors %}
+                         <p class="text-red-600">{{ error.message }}</p>
+                        {% endfor %} 
+                  </div>
+                  
+                  <!-- Champ Vidéo Premium -->
+                  <div>
+                      <div class="flex items-center">
+                          {{ form_widget(form.premiumVideo, {'attr': {'class': 'border border-amber-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-md '}}) }}
+                          <label for="premiumVideo" class="ml-2 text-amber-600 ">Vidéo Reservée aux Membres ⭐</label>
+                      </div>
+                      {{ form_errors(form.premiumVideo , {'attr': {'class': 'text-red-500 text-sm'}}) }}
+                  </div>
+
+                  <button type="submit" class="w-full text-white font-mono font-bold bg-amber-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center transition duration-300 ease-in-out transform hover:scale-105 shadow-lg hover:shadow-xl">
+                      Sauvegarder
+                  </button>
+                
+                            <button type="submit" class="w-full text-white font-mono font-bold bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center transition duration-300 ease-in-out transform hover:scale-105 shadow-lg hover:shadow-xl"> <a href="{{ path('app_home') }}">⬅️ Retour à l'acceuil</a></button> 
+                              
+              {{ form_end(form) }}
+          </div>
+      </div>
+  </div>
+</section>

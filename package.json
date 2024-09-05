@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "daisyui": "^4.12.10"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "aos": "^2.3.4"
+  }
+}

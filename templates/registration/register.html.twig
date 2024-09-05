@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+{% block title %}Inscription{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
+        /* Applique la police uniquement aux éléments que vous souhaitez */
+        .registration-page {
+            font-family: 'Segoe UI', sans-serif;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+<section class="relative bg-cover bg-center bg-no-repeat flex flex-col justify-start min-h-screen" style="background-image: url('{{ asset('images/bg6.png')}}');" >
+    <div class="absolute inset-0"></div>
+    <div class="relative flex flex-col mx-auto w-screen justify-center items-center content-center self-start registration-page ">
+        <div class="w-auto rounded-lg shadow dark:border sm:max-w-md xl:p-0 bg-black bg-opacity-70 dark:border-gray-700 h-auto z-40 flex relative justify-center items-center content-center mt-14 " >
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 mt-5 flex flex-col m-5">
+                <div>
+                    <h1 class="text-3xl font-bold text-center text-gray-900 dark:text-white flex relative">Inscription</h1>
+                </div>
+                {# Display the flash message for redirect reasons #}
+                {% for message in app.flashes('redirect_info') %}
+                    <div class="alert alert-info text-sm text-white bg-red-600 rounded-lg p-4 mb-4">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {# Display the flash message for email verification errors #}
+                {% for flash_error in app.flashes('verify_email_error') %}
+                    <div role="alert" class="alert alert-danger flex items-center p-4 mb-4 mt-5 text-sm text-white rounded-lg bg-blue-600 w-full max-w-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current mr-2" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{{ flash_error }}</span>
+                    </div>
+                {% endfor %}
+                {{ form_errors(registrationForm) }}
+                {{ form_start(registrationForm, {'attr': {'class': 'space-y-4 md:space-y-6 text-gray-400'}}) }}
+                <div>
+    <label for="firstname" class="block mb-2 text-sm text-gray-900 dark:text-white tracking-widest"></label>
+    <div class="relative mb-4">
+        {{ form_widget(registrationForm.firstname, {'attr': {'class': 'bg-black bg-opacity-50 border border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent'}}) }}
+        <label for="firstname" class="absolute text-sm text-gray-400 transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">Prénom</label>
+        {% for error in registrationForm.firstname.vars.errors %}
+    <p class="text-red-600">{{ error.message }}</p>
+{% endfor %}
+  <!-- Ajout du message d'erreur ici -->
+    </div>
+</div>
+                <div>
+    <label for="lastname" class="block mb-2 text-sm text-gray-900 dark:text-white tracking-widest"></label>
+    <div class="relative mb-4">
+        {{ form_widget(registrationForm.lastname, {'attr': {'class': 'bg-black bg-opacity-50 border border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent'}}) }}
+        <label for="lastname" class="absolute text-sm text-gray-400 transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">Nom</label>
+        {% for error in registrationForm.lastname.vars.errors %}
+    <p class="text-red-600">{{ error.message }}</p>
+{% endfor %}  <!-- Ajout du message d'erreur ici -->
+    </div>
+</div>
+                <div>
+    <label for="email" class="block mb-2 text-sm text-gray-900 dark:text-white tracking-widest"></label>
+    <div class="relative mb-4">
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'bg-black bg-opacity-50 border border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent'}}) }}
+        <label for="email" class="absolute text-sm text-gray-400 transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">E-mail</label>
+        {% for error in registrationForm.email.vars.errors %}
+    <p class="text-red-600">{{ error.message }}</p>
+{% endfor %}
+    </div>
+</div>
+                <div>
+    <label for="plainPassword" class="block mb-2 text-sm text-gray-900 dark:text-white tracking-widest"></label>
+    <div class="relative mb-4">
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'bg-black bg-opacity-50 border border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-3 pt-6 pb-2.5 peer placeholder-transparent'}}) }}
+        <label for="plainPassword" class="absolute text-xs text-gray-400 transform -translate-y-1/2 top-3 left-3 peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 transition-all duration-200 mt-1.5">Mot de passe</label>
+        {% for error in registrationForm.plainPassword.vars.errors %}
+    <p class="text-red-600">{{ error.message }}</p>
+{% endfor %}  <!-- Ajout du message d'erreur ici -->
+    </div>
+</div>
+                <div class="flex items-center">
+    <div class="flex items-center h-5">
+        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'bg-black opacity-50 border border-gray-600 text-white rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-3 peer placeholder-transparent'}}) }}
+    </div>
+    <label for="agreeTerms" class="ml-2 block text-sm text-gray-900 dark:text-white">
+        {{ form_label(registrationForm.agreeTerms) }} <a href="#" class="text-white hover:underline"></a>
+    </label>
+    {{ form_errors(registrationForm.agreeTerms) }}  <!-- Ajout du message d'erreur ici -->
+</div>
+
+
+                <button type="submit" class="font-mono font-bold bg-blue-700 w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-md text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-blue-600 dark:focus:ring-primary-800 border border-zinc-600 mb-5">
+                    Inscription
+                </button>
+
+                {{ form_end(registrationForm) }}
+
+                <div class="flex flex-col items-center content-center text-center">
+                    <a href="{{ path('app_login') }}" class=" text-left  text-white">Vous avez un compte ?<span class="text-blue-600 hover:underline"> Connectez-vous</span> </a>
+                </div>
+
+                <div class="mt-12">
+                    <a href="{{ path('app_home') }}" class="flex justify-center -mb-8 hover:underline">
+                       Retour à l'acceuil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
